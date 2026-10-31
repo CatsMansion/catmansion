@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw, ImageFont
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "_layout_oconnor.json")
 OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, "OC_平面.png")
-TITLE = sys.argv[3] if len(sys.argv) > 3 else "O'Connor 街角"
+TITLE = sys.argv[3] if len(sys.argv) > 3 else "CatMansion 街角"
 
 d = json.load(open(SRC, encoding="utf-8"))
 bld = d["building"]["box"]
@@ -165,12 +165,12 @@ for b in d["bands"]:
         T(b["x0"] + 70, (b["y0"] + b["y1"]) / 2 - 24, "绿化带 %.0f" % (b["y1"] - b["y0"]), (52, 84, 40))
     if b["name"].startswith("临街人行道-西"):
         T(b["x0"] + 70, (b["y0"] + b["y1"]) / 2 + 4, "临街人行道 %.0f" % (b["y1"] - b["y0"]), (150, 70, 44))
-    if b["name"] == "Sargood 车行道":
-        T(760, (b["y0"] + b["y1"]) / 2, "Sargood 车行道 1094", (30, 30, 36), f_s)
-    if b["name"] == "Sargood 对侧人行道":
-        T(760, b["y0"] + 90, "Sargood 对侧人行道", (58, 58, 64))
-    if b["name"] == "David 人行道":
-        T(b["x0"] + 40, -170, "David 人行道", (58, 58, 64))
+    if b["name"] == "主街 车行道":
+        T(760, (b["y0"] + b["y1"]) / 2, "主街 车行道 1094", (30, 30, 36), f_s)
+    if b["name"] == "主街 对侧人行道":
+        T(760, b["y0"] + 90, "主街 对侧人行道", (58, 58, 64))
+    if b["name"] == "侧街 人行道":
+        T(b["x0"] + 40, -170, "侧街 人行道", (58, 58, 64))
     if b["name"] == "入户步道（南北）":
         T(b["x1"] + 34, (b["y0"] + b["y1"]) / 2 - 60, "入户步道 200", (150, 70, 44))
 
@@ -181,8 +181,8 @@ dr.text((L + 8, TOP + PH - 22),
 # ---------- 右侧分层标注（短名 + 防重叠） ----------
 SHORT = {"建筑前步道": "步道", "楼前停车位": "车位", "内部车道": "内部车道",
          "临街绿化带-西": "绿化带", "临街人行道-西": "临街人行道",
-         "Sargood 路缘": "路缘", "Sargood 车行道": "Sargood 车行道",
-         "Sargood 对侧人行道": "对侧人行道"}
+         "主街 路缘": "路缘", "主街 车行道": "主街 车行道",
+         "主街 对侧人行道": "对侧人行道"}
 cut = [b for b in d["bands"] if b["x0"] <= 1200 <= b["x1"] and b["kind"] != "far"]
 cut.sort(key=lambda b: b["y0"])
 marks = [("外廊", 540)]

@@ -13,7 +13,7 @@ y 轴（cm）：
     1765-1915  绿化带/设施带  150  verge  杆、灯、行道树
     1915-2165  临街人行道     250  walk
     2165-2181  路缘            16  curb
-    2181-3275  Sargood 车行道 1094 road
+    2181-3275  主街 车行道 1094 road
     3275-3525  对侧人行道     250  walk
 """
 import json, os
@@ -66,7 +66,7 @@ def add(kind, name, x0, y0, x1, y1, **kw):
     return b
 
 
-# ① 建筑前步道：从西端一路铺到 David 人行道
+# ① 建筑前步道：从西端一路铺到 侧街 人行道
 add("walk", "建筑前步道", LOT_X0, y0_path, LAWN_X1, y1_path, locked=True)
 
 # ② 车位
@@ -86,15 +86,15 @@ add("walk", "临街人行道-东", PATH_N_X1, y0_sw, LAWN_X1, y1_sw, locked=True
 # ⑥ crossover（车行道口）：把绿化带 + 人行道 + 路缘在西端挖开
 add("lot", "车道出入口", LOT_X0, y0_vrg, XW_X0, y1_curb, locked=True)
 
-# ⑦ Sargood 街
-add("curb", "Sargood 路缘", XW_X0, y0_curb, DC1, y1_curb, locked=True)
-add("road", "Sargood 车行道", -2600.0, y0_road, DC1, y1_road, locked=True)
-add("walk", "Sargood 对侧人行道", -2600.0, y0_fw, DC1, y1_fw, locked=True)
+# ⑦ 主街 街
+add("curb", "主街 路缘", XW_X0, y0_curb, DC1, y1_curb, locked=True)
+add("road", "主街 车行道", -2600.0, y0_road, DC1, y1_road, locked=True)
+add("walk", "主街 对侧人行道", -2600.0, y0_fw, DC1, y1_fw, locked=True)
 
-# ⑧ David 街
-add("walk", "David 人行道", DW0, -2600.0, DW1, y0_curb, locked=True)
-add("curb", "David 路缘", DW1, -2600.0, DC1, y0_curb, locked=True)
-add("road", "David 车行道", DC1, -2600.0, DR1, y1_road, locked=True)
+# ⑧ 侧街 街
+add("walk", "侧街 人行道", DW0, -2600.0, DW1, y0_curb, locked=True)
+add("curb", "侧街 路缘", DW1, -2600.0, DC1, y0_curb, locked=True)
+add("road", "侧街 车行道", DC1, -2600.0, DR1, y1_road, locked=True)
 add("far", "对面楼", DR1, -2600.0, 7600.0, y1_road, locked=True)
 
 # ⑨ 侧院草坪：北块 + 中块（中块被南北步道切两半）
@@ -129,7 +129,7 @@ out["lamps"] = lamps
 out["building"] = {
     "box": {"x0": 0.0, "y0": 0.0, "x1": 2912.0, "y1": 540.0},
     "corr": {"y0": 420.0, "y1": 540.0},
-    "units": 8, "noStart": 201, "label": "O'Connor 公寓",
+    "units": 8, "noStart": 201, "label": "CatMansion 公寓",
 }
 out["_note"] = ("方案B 2026-10-31：车位退到人行道后，增设 580 内部车道；"
                 "绿化带150 + 人行道250 + 路缘16 全在车位外侧；"
